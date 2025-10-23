@@ -1,4 +1,4 @@
-export const validateNames = function validateInputNames(inputNames) {
+export const parseNames = function validateAndParseNameInput(inputNames) {
   const inputNamesArr = removeSpace(inputNames)
     .split(",")
     .map((name) => {
@@ -6,6 +6,9 @@ export const validateNames = function validateInputNames(inputNames) {
       return name;
     });
   checkifDuplicated(inputNamesArr);
+  if (inputNamesArr.length < 2) {
+    throw new Error(`[ERROR] 참가자는 2명 이상이어야 합니다.`);
+  }
 
   return inputNamesArr;
 };
