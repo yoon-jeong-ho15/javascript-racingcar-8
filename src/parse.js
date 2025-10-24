@@ -34,4 +34,11 @@ const checkifDuplicated = (namesArr) => {
   });
 };
 
-export const validateCounts = function validateInputTrialCounts(inputCounts) {};
+export const parseRound = function validateAndParseRoundInput(inputRound) {
+  const regex = new RegExp(`[^0-9,]`, "g");
+  const trimmed = removeSpace(inputRound);
+  if (regex.test(trimmed)) {
+    throw new Error(`[ERROR] 시도 횟수에는 숫자만 입력할 수 있습니다.`);
+  }
+  return Number(trimmed);
+};
