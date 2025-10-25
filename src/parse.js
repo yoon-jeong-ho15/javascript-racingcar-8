@@ -1,14 +1,14 @@
 export const parseNames = function validateAndParseNameInput(inputNames) {
-  const inputNamesArr = removeSpace(inputNames).split(",");
+  const inputNamesArr = removeAllSpaces(inputNames).split(",");
 
   inputNamesArr.forEach(checkStrLength);
-  checkifDuplicated(inputNamesArr);
+  checkIfDuplicated(inputNamesArr);
   checkMinimumParticipants(inputNamesArr);
 
   return inputNamesArr;
 };
 
-const removeSpace = (input) => {
+const removeAllSpaces = (input) => {
   return input.replaceAll(" ", "");
 };
 
@@ -22,7 +22,7 @@ const checkStrLength = (name) => {
   }
 };
 
-const checkifDuplicated = (namesArr) => {
+const checkIfDuplicated = (namesArr) => {
   const set = new Set();
   namesArr.map((name) => {
     if (set.has(name)) {
@@ -39,16 +39,16 @@ const checkMinimumParticipants = (namesArr) => {
 };
 
 export const parseRound = function validateAndParseRoundInput(inputRound) {
-  const regex = new RegExp(`[^0-9,]`, "g");
-  const trimmed = removeSpace(inputRound);
+  const hasNonNumeric = new RegExp(`[^0-9,]`, "g");
+  const trimmedInput = removeAllSpaces(inputRound);
 
-  if (regex.test(trimmed)) {
+  if (hasNonNumeric.test(trimmedInput)) {
     throw new Error(`[ERROR] 시도 횟수에는 숫자만 입력할 수 있습니다.`);
   }
-  const num = Number(trimmed);
+  const round = Number(trimmedInput);
 
-  if (num < 1) {
+  if (round < 1) {
     throw new Error(`[EROOR] 시도 횟수는 0 보다 큰 자연수여야 합니다.`);
   }
-  return num;
+  return round;
 };
