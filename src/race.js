@@ -19,24 +19,24 @@ export const createPlayers = (namesArr) => {
 };
 
 const processRound = (players) => {
-  for (let i = 0; i < players.length; i++) {
+  players.forEach((player) => {
     const random = Random.pickNumberInRange(0, 9);
-    players[i] = processMove(players[i], random);
-  }
+    processMove(player, random);
+  });
   printEachRound(players);
 };
 
 export const processMove = (player, random) => {
-  if (random >= 4) {
+  if (random > 3) {
     player.distance = player.distance + 1;
   }
   return player;
 };
 
 const printEachRound = (players) => {
-  for (const player of players) {
-    Console.print(`${player.name} : ${"-".repeat(player.distance)}`);
-  }
+  players.forEach((player) =>
+    Console.print(`${player.name} : ${"-".repeat(player.distance)}`)
+  );
 };
 
 const findWinner = (players) => {
