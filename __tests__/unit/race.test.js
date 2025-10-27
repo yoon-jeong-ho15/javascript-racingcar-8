@@ -1,5 +1,5 @@
-import { createPlayers, findWinner, printEachRound } from "../../src/race";
-import { getLogSpy, testPlayers } from "../../src/tests/mocks";
+import { createPlayers, findWinner, printEachRound } from "../../src/race.js";
+import { getLogSpy, testPlayers } from "../../src/tests/mocks.js";
 
 describe("createPlayers unit test", () => {
   test.each([

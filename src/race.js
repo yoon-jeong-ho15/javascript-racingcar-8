@@ -1,5 +1,5 @@
 import { Random, Console } from "@woowacourse/mission-utils";
-import { MOVE_CONDITION } from "./constant";
+import { MOVE_CONDITION } from "./constant.js";
 
 export const startGame = (namesArr, round) => {
   const players = createPlayers(namesArr);

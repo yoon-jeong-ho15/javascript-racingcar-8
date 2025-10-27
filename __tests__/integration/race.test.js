@@ -1,5 +1,5 @@
-import { getLogSpy, mockRandoms, testPlayers } from "../../src/tests/mocks";
-import { processRound } from "../../src/race";
+import { getLogSpy, mockRandoms, testPlayers } from "../../src/tests/mocks.js";
+import { processRound } from "../../src/race.js";
 
 describe("processRound integration test", () => {
   test.each([
