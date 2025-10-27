@@ -44,6 +44,7 @@
   - [x] distance : 자동차가 이동한 거리
 - [x] `Random.pickNumberInRange(0, 9);`의 결과가 4 이상인 경우 전진. (3항 연산자 x)
 - [x] 전진하는 자동차는 `distance + 1`.
+- [x] 매 라운드마다 진행 상황을 출력한다.
 - [x] 게임 종료 후에 `distance`가 가장 높은 자동차를 우승자 배열에 추가.
 - [x] 우승자 배열을 출력한다.
 
@@ -143,3 +144,5 @@ feat: setup project
 ## 테스트 코드
 
 ### mock 함수
+
+### test.each()

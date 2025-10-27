@@ -34,7 +34,7 @@ const processMove = (player, random) => {
   return player;
 };
 
-const printEachRound = (players) => {
+export const printEachRound = (players) => {
   players.forEach((player) =>
     Console.print(`${player.name} : ${"-".repeat(player.distance)}`)
   );

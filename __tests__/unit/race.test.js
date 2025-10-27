@@ -1,5 +1,5 @@
-import { createPlayers, findWinner } from "../../src/race";
-import { testPlayers } from "../../src/tests/mocks";
+import { createPlayers, findWinner, printEachRound } from "../../src/race";
+import { getLogSpy, testPlayers } from "../../src/tests/mocks";
 
 describe("createPlayers unit test", () => {
   test.each([
@@ -44,5 +44,19 @@ describe("findWinner unit test", () => {
   ])("$description", ({ players, expected }) => {
     const winners = findWinner(players);
     expect(winners.map((p) => p.name)).toEqual(expected);
+  });
+});
+
+describe("printEachRound unit test", () => {
+  test.each([
+    { players: testPlayers[0], logs: ["hello : -", "world : -"] },
+    { players: testPlayers[1], logs: ["my : -", "name : ", "is : --"] },
+    { players: testPlayers[2], logs: ["yoon : ---", "jeong : -", "ho : ---"] },
+  ])("", ({ players, logs }) => {
+    const logSpy = getLogSpy();
+    printEachRound(players);
+    logs.forEach((log) => {
+      expect(logSpy).toHaveBeenCalledWith(expect.stringContaining(log));
+    });
   });
 });
