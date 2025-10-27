@@ -93,6 +93,8 @@ const removeSpace = (input) => {
 - 공백을 제거하는 기능은 이름과 시도 횟수 입력에 모두 사용된다.
 - 공백 처리 방침이 바뀌거나 (문자열 내 모든 공백 제거 -> 앞,뒤의 공백만 제거) 공백 제거 로직이 변경되었을 때 수정이 쉽다.
 
+##
+
 # 궁금했던 것
 
 ## 기명 함수 표현식
@@ -139,10 +141,43 @@ feat: setup project
 
 다른 규칙은 대동소이한데, 특이한점은 [여기서는](https://gist.github.com/stephenparish/9941e89d80e2bc58a153#subject-text) **"don't capitalize first letter"** 라고 명시적으로 대문자를 사용하지 말기를 권장하고 있다.
 
-# 배운것
+# 배운 것 (느낀 점)
 
 ## 테스트 코드
 
-### mock 함수
+### `mockImplementation` vs `spyOn`
 
-### test.each()
+#### `mockQuestions`
+
+```Js
+export const mockQuestions = (inputs) => {
+  Console.readLineAsync = jest.fn();
+
+  Console.readLineAsync.mockImplementation(() => {
+    const input = inputs.shift();
+    return Promise.resolve(input);
+  });
+};
+```
+
+- `jest.fn(fn)` 과 `jest.fn().mockImplementation(fn)`는 [같다](https://jestjs.io/docs/mock-function-api#mockfnmockimplementationfn).
+- 테스트중에 `Console.readLineAsync`가 호출될 때 마다 원본 모듈이 아닌 위의 콜백함수가 호출된다.
+- 원래 `jest.fn()`으로 만든 모킹함수는 **호출될 때의 정보들**(호출 횟수, 매개변수 등)을 기록하기만 하고 아무 기능을 수행하지 않지만, `mockImplementation()`을 사용하면 실제로 어떤 기능(동작)을 수행한다.
+
+#### `getLogSpy`
+
+```js
+export const getLogSpy = () => {
+  const logSpy = jest.spyOn(Console, "print");
+  logSpy.mockClear();
+  return logSpy;
+};
+```
+
+- `jest.spyOn()`은 `jest.fn()`과 달리 새로운 함수를 생성하는게 아니라, **원본 함수의 기능을 그대로** 유지하여 사용한다.
+- 특이한점은 반드시 감시하려는 함수를 가진 객체와 함께 호출해야 한다는 점이다.
+
+#### 정리
+
+- `mockImplementation`과 `spyOn`은 모두 단순히 호출 정보만 확인하지 않고 어떤 기능을 구행한다는점에서 공통점을 가지지만, 후자와 달리 전자는 개발자가 수행할 기능을 직접 작성해야 한다는 차이가 있다.
+- `mockQuestions`에서 `spyOn`을 사용할 수 없었던 이유는, 원본 동작을 그대로 수행할 경우(사용자의 입력 받기), 테스트 수행마다 개발자가 직접 콘솔에 입력해야하고, 그렇게되면 테스트 코드 작성을 통한 테스트 자동화의 의미가 사라지기 때문이다.
