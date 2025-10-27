@@ -26,6 +26,7 @@
 
 - [x] 공백 제거.
 - [x] 5글자 이하인지 확인.
+  - [ ] 1글자 이상인지도 확인.
 - [x] 중복되는지 확인.
 - [x] 참가자가 2명 이상인지 확인.
 
@@ -33,6 +34,7 @@
 
 - [x] 공백 제거.
 - [x] 숫자만 입력되었는지 확인.
+- [ ] 0 이상의 양수가 입력되었는지 확인.
 
 ## 게임 로직
 
@@ -48,9 +50,11 @@
 ## 에러 처리
 
 - [x] 5글자 제한
+- [ ] 1글자 이상
 - [x] 중복된 이름
 - [x] 참여자 2명 이상
 - [x] 시도 횟수에 숫자 외 다른 문자 입력
+- [ ] 시도 횟수 0 이상
 
 # 결정 사항
 
@@ -71,9 +75,9 @@
 - 더 낮은 수로 주행한 자동차가 있으면 `minStop`변수와 우승자 배열 초기화.
 - 같은 수로 주행한 자동차가 있으면 우승자 배열에 추가.
 
-이렇게 하면 참가한 자동차가 많은 경우에 더 유리할 수 있다.
+이렇게 하면 참가한 자동차가 많은 경우에 더 유리할 수 있을것 같다.
 
-# 궁금했던 것들
+# 궁금했던 것
 
 ## 기명 함수 표현식
 
@@ -89,7 +93,7 @@ Airbnb 자바스크립트 스타일 가이드의 [함수 정의 부분](https://
 
 그래서 함수 표현식을 사용해야 한다. 그런데 왜 화살표 함수로 정의하면 안되고 named(기명) 함수표현식으로 정의해야 할까?
 
-1. 에러 콜스택 표기될 이름이 필요하기 때문에.
+2. 에러 콜스택 표기될 이름이 필요하기 때문에.
 
 > Don’t forget to explicitly name the expression, regardless of whether or not the name is inferred from the containing variable (which is often the case in modern browsers or when using compilers such as Babel). This eliminates any assumptions made about the Error’s call stack.
 
@@ -111,3 +115,5 @@ feat: setup project
 3번이 7가지 규칙중에 상대적으로 **덜 중요한 규칙**이라는 것은 알겠다. 그런데 다른 규칙들은 어떨까? 다른 규칙들중에도 덜 중요하거나 혹은 최근들어 변경된 것이 있는지 확인해보기 위해 [Angular 규칙](https://gist.github.com/stephenparish/9941e89d80e2bc58a153)과 비교 대조를 해봤다.
 
 다른 규칙은 대동소이한데, 특이한점은 [여기서는](https://gist.github.com/stephenparish/9941e89d80e2bc58a153#subject-text) **"don't capitalize first letter"** 라고 명시적으로 대문자를 사용하지 말기를 권장하고 있다.
+
+# 배운것
