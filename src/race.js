@@ -1,7 +1,7 @@
 import { Random, Console } from "@woowacourse/mission-utils";
 
 export const startGame = (namesArr, round) => {
-  const players = createPlayer(namesArr);
+  const players = createPlayers(namesArr);
 
   for (let i = 0; i < round; i++) {
     processRound(players);
@@ -11,9 +11,9 @@ export const startGame = (namesArr, round) => {
   return winner.map((player) => player.name);
 };
 
-export const createPlayer = (namesArr) => {
+export const createPlayers = (namesArr) => {
   const players = namesArr.map((name) => {
-    return { name, step: 0 };
+    return { name, distance: 0 };
   });
   return players;
 };
@@ -28,19 +28,19 @@ const processRound = (players) => {
 
 export const processMove = (player, random) => {
   if (random >= 4) {
-    player.step = player.step + 1;
+    player.distance = player.distance + 1;
   }
   return player;
 };
 
 const printEachRound = (players) => {
   for (const player of players) {
-    Console.print(`${player.name} : ${"-".repeat(player.step)}`);
+    Console.print(`${player.name} : ${"-".repeat(player.distance)}`);
   }
 };
 
 const findWinner = (players) => {
-  const steps = players.map((player) => player.step);
-  const max = Math.max(...steps);
-  return players.filter((player) => player.step === max);
+  const distances = players.map((player) => player.distance);
+  const max = Math.max(...distances);
+  return players.filter((player) => player.distance === max);
 };
