@@ -1,4 +1,5 @@
 import { Random, Console } from "@woowacourse/mission-utils";
+import { MOVE_CONDITION } from "./constant";
 
 export const startGame = (namesArr, round) => {
   const players = createPlayers(namesArr);
@@ -27,7 +28,7 @@ const processRound = (players) => {
 };
 
 export const processMove = (player, random) => {
-  if (random > 3) {
+  if (random > MOVE_CONDITION) {
     player.distance = player.distance + 1;
   }
   return player;

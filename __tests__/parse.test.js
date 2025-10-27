@@ -1,4 +1,4 @@
-import { parseNames, parseRound, validateCounts } from "../src/parse";
+import { parseNames, parseRound } from "../src/parse";
 
 describe("parseNames 테스트", () => {
   test("5글자 이하 여부 확인 - 정상", () => {

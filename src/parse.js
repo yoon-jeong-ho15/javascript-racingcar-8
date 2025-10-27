@@ -1,3 +1,9 @@
+import {
+  MAXIMUM_NAME_LENGTH,
+  MINIMUM_NAME_LENGTH,
+  MINIMUM_PLAYERS,
+} from "./constant";
+
 export const parseNames = function validateAndParseNameInput(inputNames) {
   const inputNamesArr = removeAllSpaces(inputNames).split(",");
 
@@ -13,18 +19,22 @@ const removeAllSpaces = (input) => {
 };
 
 const checkStrLength = (name) => {
-  if (name.length < 1) {
-    throw new Error(`[ERROR] 이름은 1글자 이상으로 입력해주세요.`);
+  if (name.length < MINIMUM_NAME_LENGTH) {
+    throw new Error(
+      `[ERROR] 이름은 ${MINIMUM_NAME_LENGTH}글자 이상으로 입력해주세요.`
+    );
   }
-  if (name.length > 5) {
-    throw new Error(`[ERROR] 이름은 5글자 이하로 입력해주세요. : ${name}`);
+  if (name.length > MAXIMUM_NAME_LENGTH) {
+    throw new Error(
+      `[ERROR] 이름은 ${MAXIMUM_NAME_LENGTH}글자 이하로 입력해주세요. : ${name}`
+    );
     입;
   }
 };
 
 const checkIfDuplicated = (namesArr) => {
   const set = new Set();
-  namesArr.map((name) => {
+  namesArr.forEach((name) => {
     if (set.has(name)) {
       throw new Error(`[ERROR] 중복된 이름이 입력되었습니다. : ${name}`);
     }
@@ -33,8 +43,8 @@ const checkIfDuplicated = (namesArr) => {
 };
 
 const checkMinimumParticipants = (namesArr) => {
-  if (namesArr.length < 2) {
-    throw new Error(`[ERROR] 참가자는 2명 이상이어야 합니다.`);
+  if (namesArr.length < MINIMUM_PLAYERS) {
+    throw new Error(`[ERROR] 참가자는 ${MINIMUM_PLAYERS}명 이상이어야 합니다.`);
   }
 };
 
