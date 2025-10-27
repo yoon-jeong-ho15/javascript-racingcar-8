@@ -22,3 +22,20 @@ export const getLogSpy = () => {
   logSpy.mockClear();
   return logSpy;
 };
+
+export const testPlayers = [
+  [
+    { name: "hello", distance: 1 },
+    { name: "world", distance: 1 },
+  ],
+  [
+    { name: "my", distance: 1 },
+    { name: "name", distance: 0 },
+    { name: "is", distance: 2 },
+  ],
+  [
+    { name: "yoon", distance: 3 },
+    { name: "jeong", distance: 1 },
+    { name: "ho", distance: 3 },
+  ],
+];
