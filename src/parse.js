@@ -2,7 +2,7 @@ import {
   MAXIMUM_NAME_LENGTH,
   MINIMUM_NAME_LENGTH,
   MINIMUM_PLAYERS,
-} from "./constant";
+} from "./constant.js";
 
 export const parseNames = function validateAndParseNameInput(inputNames) {
   const inputNamesArr = removeAllSpaces(inputNames).split(",");
@@ -28,7 +28,6 @@ const checkStrLength = (name) => {
     throw new Error(
       `[ERROR] 이름은 ${MAXIMUM_NAME_LENGTH}글자 이하로 입력해주세요. : ${name}`
     );
-    입;
   }
 };
 

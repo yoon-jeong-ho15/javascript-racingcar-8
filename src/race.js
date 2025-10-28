@@ -1,5 +1,5 @@
 import { Random, Console } from "@woowacourse/mission-utils";
-import { MOVE_CONDITION } from "./constant";
+import { MOVE_CONDITION } from "./constant.js";
 
 export const startGame = (namesArr, round) => {
   const players = createPlayers(namesArr);
@@ -19,7 +19,7 @@ export const createPlayers = (namesArr) => {
   return players;
 };
 
-const processRound = (players) => {
+export const processRound = (players) => {
   players.forEach((player) => {
     const random = Random.pickNumberInRange(0, 9);
     processMove(player, random);
@@ -27,20 +27,20 @@ const processRound = (players) => {
   printEachRound(players);
 };
 
-export const processMove = (player, random) => {
+const processMove = (player, random) => {
   if (random > MOVE_CONDITION) {
     player.distance = player.distance + 1;
   }
   return player;
 };
 
-const printEachRound = (players) => {
+export const printEachRound = (players) => {
   players.forEach((player) =>
     Console.print(`${player.name} : ${"-".repeat(player.distance)}`)
   );
 };
 
-const findWinner = (players) => {
+export const findWinner = (players) => {
   const distances = players.map((player) => player.distance);
   const max = Math.max(...distances);
   return players.filter((player) => player.distance === max);

@@ -26,7 +26,7 @@
 
 - [x] 공백 제거.
 - [x] 5글자 이하인지 확인.
-  - [ ] 1글자 이상인지도 확인.
+  - [x] 1글자 이상인지도 확인.
 - [x] 중복되는지 확인.
 - [x] 참가자가 2명 이상인지 확인.
 
@@ -34,27 +34,28 @@
 
 - [x] 공백 제거.
 - [x] 숫자만 입력되었는지 확인.
-- [ ] 0 이상의 양수가 입력되었는지 확인.
+- [x] 0 이상의 양수가 입력되었는지 확인.
 
 ## 게임 로직
 
 - [x] 시도 횟수만큼 반복.
 - [x] `player` 객체
   - [x] name : 이름
-  - [x] step : 자동차가 이동한 거리
+  - [x] distance : 자동차가 이동한 거리
 - [x] `Random.pickNumberInRange(0, 9);`의 결과가 4 이상인 경우 전진. (3항 연산자 x)
-- [x] 전진하는 자동차는 `step + 1`.
-- [x] 게임 종료 후에 `step`가 가장 높은 자동차를 우승자 배열에 추가.
+- [x] 전진하는 자동차는 `distance + 1`.
+- [x] 매 라운드마다 진행 상황을 출력한다.
+- [x] 게임 종료 후에 `distance`가 가장 높은 자동차를 우승자 배열에 추가.
 - [x] 우승자 배열을 출력한다.
 
 ## 에러 처리
 
 - [x] 5글자 제한
-- [ ] 1글자 이상
+- [x] 1글자 이상
 - [x] 중복된 이름
 - [x] 참여자 2명 이상
 - [x] 시도 횟수에 숫자 외 다른 문자 입력
-- [ ] 시도 횟수 0 이상
+- [x] 시도 횟수 0 이상
 
 # 결정 사항
 
@@ -77,6 +78,23 @@
 
 이렇게 하면 참가한 자동차가 많은 경우에 더 유리할 수 있을것 같다.
 
+## 공백 제거 함수 `removeSpace()`
+
+```js
+const removeSpace = (input) => {
+  return input.replaceAll(" ", "");
+};
+```
+
+사실 굳이 함수로 분리하여 호출하지 않아도 사용하는 코드의 수는 똑같이 1줄이다.
+
+그런데도 불구하고 분리하기로 결정한 이유는 이렇다.
+
+- 공백을 제거하는 기능은 이름과 시도 횟수 입력에 모두 사용된다.
+- 공백 처리 방침이 바뀌거나 (문자열 내 모든 공백 제거 -> 앞,뒤의 공백만 제거) 공백 제거 로직이 변경되었을 때 수정이 쉽다.
+
+##
+
 # 궁금했던 것
 
 ## 기명 함수 표현식
@@ -87,19 +105,26 @@ Airbnb 자바스크립트 스타일 가이드의 [함수 정의 부분](https://
 
 이유는 이렇다.
 
-1. 함수 선언식은 호이스팅되기 때문에 가독성과 유지보수성을 저하시킨다.
+1. 함수 선언식은 *호이스팅*되기 때문에 가독성과 유지보수성을 저하시킨다.
 
-> Why? Function declarations are hoisted, which means that it’s easy - too easy - to reference the function before it is defined in the file. This harms readability and maintainability.
+> Why? Function declarations are **hoisted**, which means that it’s easy - too easy - to reference the function before it is defined in the file. This harms readability and maintainability.
 
 그래서 함수 표현식을 사용해야 한다. 그런데 왜 화살표 함수로 정의하면 안되고 named(기명) 함수표현식으로 정의해야 할까?
 
 2. 에러 콜스택 표기될 이름이 필요하기 때문에.
 
-> Don’t forget to explicitly name the expression, regardless of whether or not the name is inferred from the containing variable (which is often the case in modern browsers or when using compilers such as Babel). This eliminates any assumptions made about the Error’s call stack.
+> Don’t forget to explicitly name the expression, **regardless of whether or not the name is inferred** from the containing variable (which is often the case in modern browsers or when using compilers such as Babel). This **eliminates any assumptions** made about the Error’s call stack.
 
 요즘 컴파일러들은 알아서 변수명을 함수명으로 추론한다고 하지만, 혹시모를 경우에 대비해 명시적으로 이름을 작성하는게 좋다고 한다.[관련 디스커션](https://github.com/airbnb/javascript/issues/794)
 
 관련해서 작년 우테코 참가자분들이 나눈 대화도 있다.[링크](https://github.com/woowacourse-precourse/javascript-racingcar-7/pull/404#issuecomment-2444166034)
+
+일단 이번 과제에서는 조금 더 설명이 필요할 수 있는 함수에 대해서만 기명 표현식을 사용했고 나머지 간단한 함수들에 대해서는 화살표 함수로 정의했다.
+
+예시 )
+
+- `export const parseNames = function validateAndParseNameInput(inputNames) {...}`
+- `const checkifDuplicated = (namesArr) => {...}`
 
 ## 커밋 메시지
 
@@ -116,4 +141,43 @@ feat: setup project
 
 다른 규칙은 대동소이한데, 특이한점은 [여기서는](https://gist.github.com/stephenparish/9941e89d80e2bc58a153#subject-text) **"don't capitalize first letter"** 라고 명시적으로 대문자를 사용하지 말기를 권장하고 있다.
 
-# 배운것
+# 배운 것 (느낀 점)
+
+## 테스트 코드
+
+### `mockImplementation` vs `spyOn`
+
+#### `mockQuestions`
+
+```Js
+export const mockQuestions = (inputs) => {
+  Console.readLineAsync = jest.fn();
+
+  Console.readLineAsync.mockImplementation(() => {
+    const input = inputs.shift();
+    return Promise.resolve(input);
+  });
+};
+```
+
+- `jest.fn(fn)` 과 `jest.fn().mockImplementation(fn)`는 [같다](https://jestjs.io/docs/mock-function-api#mockfnmockimplementationfn).
+- 테스트중에 `Console.readLineAsync`가 호출될 때 마다 원본 모듈이 아닌 위의 콜백함수가 호출된다.
+- 원래 `jest.fn()`으로 만든 모킹함수는 **호출될 때의 정보들**(호출 횟수, 매개변수 등)을 기록하기만 하고 아무 기능을 수행하지 않지만, `mockImplementation()`을 사용하면 실제로 어떤 기능(동작)을 수행한다.
+
+#### `getLogSpy`
+
+```js
+export const getLogSpy = () => {
+  const logSpy = jest.spyOn(Console, "print");
+  logSpy.mockClear();
+  return logSpy;
+};
+```
+
+- `jest.spyOn()`은 `jest.fn()`과 달리 새로운 함수를 생성하는게 아니라, **원본 함수의 기능을 그대로** 유지하여 사용한다.
+- 특이한점은 반드시 감시하려는 함수를 가진 객체와 함께 호출해야 한다는 점이다.
+
+#### 정리
+
+- `mockImplementation`과 `spyOn`은 모두 단순히 호출 정보만 확인하지 않고 어떤 기능을 구행한다는점에서 공통점을 가지지만, 후자와 달리 전자는 개발자가 수행할 기능을 직접 작성해야 한다는 차이가 있다.
+- `mockQuestions`에서 `spyOn`을 사용할 수 없었던 이유는, 원본 동작을 그대로 수행할 경우(사용자의 입력 받기), 테스트 수행마다 개발자가 직접 콘솔에 입력해야하고, 그렇게되면 테스트 코드 작성을 통한 테스트 자동화의 의미가 사라지기 때문이다.
